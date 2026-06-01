@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isAuthenticated() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidProject(data) {
+      return data.keys().hasAll(['projectId', 'ownerId', 'title', 'createdAt', 'updatedAt']) &&
+             data.projectId is string && data.projectId.size() <= 128 && data.projectId.matches('^[a-zA-Z0-9_\\-]+$') &&
+             data.ownerId == request.auth.uid &&
+             data.title is string && data.title.size() <= 100 &&
+             (!('originalImage' in data) || data.originalImage is string) &&
+             (!('filteredImage' in data) || data.filteredImage is string) &&
+             (!('adjustments' in data) || data.adjustments is string) &&
+             (!('texts' in data) || data.texts is string) &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp;
+    }
+
+    match /projects/{projectId} {
+      allow create: if isAuthenticated() &&
+                       isValidId(projectId) &&
+                       isValidProject(incoming()) &&
+                       incoming().keys().size() <= 9 &&
+                       incoming().projectId == projectId &&
+                       incoming().createdAt == request.time &&
+                       incoming().updatedAt == request.time;
+
+      allow update: if isAuthenticated() &&
+                       isValidId(projectId) &&
+                       existing().ownerId == request.auth.uid &&
+                       isValidProject(incoming()) &&
+                       incoming().ownerId == existing().ownerId &&
+                       incoming().projectId == existing().projectId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().updatedAt == request.time &&
+                       incoming().diff(existing()).affectedKeys().hasOnly(['title', 'originalImage', 'filteredImage', 'adjustments', 'texts', 'updatedAt']);
+
+      allow delete: if isAuthenticated() &&
+                       isValidId(projectId) &&
+                       existing().ownerId == request.auth.uid;
+
+      allow get: if isAuthenticated() &&
+                    isValidId(projectId) &&
+                    existing().ownerId == request.auth.uid;
+
+      allow list: if isAuthenticated() &&
+                     resource.data.ownerId == request.auth.uid;
+    }
+  }
+}

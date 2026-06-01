@@ -1,0 +1,27 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "Represents an image editing project",
+      "type": "object",
+      "properties": {
+        "projectId": { "type": "string", "description": "The unique ID of the project" },
+        "ownerId": { "type": "string", "description": "The UID of the user who created the project" },
+        "title": { "type": "string", "description": "The name of the project" },
+        "originalImage": { "type": "string" },
+        "filteredImage": { "type": "string" },
+        "adjustments": { "type": "string", "description": "JSON string of adjustments" },
+        "texts": { "type": "string", "description": "JSON string of texts array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["projectId", "ownerId", "title", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "projects/{projectId}": {
+      "schema": { "$ref": "#/entities/Project" },
+      "description": "Stores image editing projects"
+    }
+  }
+}
