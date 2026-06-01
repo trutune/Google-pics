@@ -36,7 +36,6 @@ export default function LandingPage({ onSignIn }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans flex flex-col">
       {/* Navbar */}
-
       <header className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
         <div className="flex items-center gap-2">
           <button className="p-2 hover:bg-gray-100 rounded-full text-gray-600 mr-2 lg:hidden">
@@ -90,7 +89,6 @@ export default function LandingPage({ onSignIn }: LandingPageProps) {
         </div>
 
         <div className="mt-20 w-full max-w-3xl rounded-xl border border-gray-200 shadow-2xl overflow-hidden bg-gray-50">
-           {/* Mock of the editor interface for the landing page */}
            <div className="h-10 bg-white border-b border-gray-200 flex items-center px-4 gap-4">
              <div className="flex gap-1.5 pl-2">
                <div className="w-3 h-3 rounded-full bg-red-400"></div>
@@ -141,6 +139,32 @@ export default function LandingPage({ onSignIn }: LandingPageProps) {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Precision Adjustments</h3>
               <p className="text-gray-600">Apply filters, tune colors, and overlay text seamlessly with our intuitive canvas editor.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ✅ SEO SECTION - Google ko keywords milenge */}
+      <section className="py-20 bg-white border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            The Best Free AI Image Editor Online
+          </h2>
+          <p className="text-lg text-gray-600 mb-10 max-w-3xl mx-auto">
+            Google Pics is a free AI image editor and generator powered by Google Gemini. Create stunning AI-generated images, edit photos online, apply filters, add text, and export high-quality graphics — all in your browser with no installation required.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-8 text-left">
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h3 className="font-bold text-gray-900 mb-2">🎨 AI Image Generator</h3>
+              <p className="text-gray-600 text-sm">Generate beautiful images from text prompts using Google Gemini AI. Free AI art generator online — no signup needed to explore.</p>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h3 className="font-bold text-gray-900 mb-2">🖼️ Free Photo Editor</h3>
+              <p className="text-gray-600 text-sm">Edit photos online for free. Adjust brightness, contrast, crop images, add text overlays, and apply filters with our easy-to-use browser editor.</p>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h3 className="font-bold text-gray-900 mb-2">☁️ Cloud Image Storage</h3>
+              <p className="text-gray-600 text-sm">Save and access your AI-generated images and photo projects from anywhere. Free cloud image storage synced to your Google account.</p>
             </div>
           </div>
         </div>
